@@ -1,0 +1,29 @@
+#Polares
+rm(list=ls())
+t<-1
+E<-1e-6
+f<-function(t){
+  3*(sin(t))^3-1
+}
+g<-function(t){
+  4*cos(t)*sin(t)
+}
+h<-function(t){
+  f(t)-g(t)
+}
+t<-seq(0,10,len=100)
+x<-f(t)
+y<-g(t)
+conver<-c()
+cont<-1
+repeat{
+  if(abs(x[cont]-y[cont])<E){
+    conver<-c(conver,cont)
+  }
+  cont<-cont+1
+  if(cont>100) break
+}
+
+datos<-data.frame("x"=x,"y"=y)
+print(datos)
+print(conver)

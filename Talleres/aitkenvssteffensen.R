@@ -1,0 +1,54 @@
+#Steffensen vs Aitken
+#Steffensen
+rm(list=ls())
+x<-1
+E<-1e-6
+f<-function(x){
+  x^2-cos(x)
+}
+valx<-c(x)
+steff<-c()
+esteff<-c()
+Esteff<-c()
+cont<-1
+maxi<-300
+repeat{
+  y<-x-(f(x))^2/(f(x+f(x))-f(x))
+  steff<-c(steff,y)
+  Esteff<-c(Esteff,abs(x-y))
+  esteff<-c(esteff,abs(x-y)/abs(y)*100)
+  x<-y
+  valx<-c(valx,x)
+  cont<-cont+1
+  if(abs(x-y)<E) break
+}
+datosSteff<-data.frame("x"=valx,"y"=steff,"E"=Esteff,"e"=esteff)
+print(datosSteff)
+#Aitken--------------------------------------------------------------------
+x<-1
+val2x<-c(x)
+ait<-c()
+eait<-c()
+Eait<-c()
+cont<-1
+maxi<-300
+a<-c()
+repeat{
+  a<-c(a,f(cont))
+  cont<-cont+1
+  if(cont>maxi) break
+}
+cont<-1
+repeat{
+  y<-a[cont+2]-((a[cont+2]-a[cont+1])^2)/(a[cont+2]-2*a[cont+1]+a[cont])
+  ait<-c(ait,y)
+  Eait<-c(Eait,abs(x-y))
+  eait<-c(eait,abs(x-y)/abs(y)*100)
+  x<-y
+  val2x<-c(val2x,x)
+  cont<-cont+1
+  if(abs(x-y)<E) break
+}
+datosait<-data.frame("x"=val2x,"y"=ait,"E"=Eait,"e"=eait)
+print(datosait)
+#--------------------------------------------------------------------------
